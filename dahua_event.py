@@ -18,7 +18,7 @@ from homeassistant.const import (
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = 'dahua_event'
-URL_TEMPLATE = "{protocol}://{host}:{port}/cgi-bin/eventManager.cgi?action=attach&channel=1&codes=%5B{events}%5D"
+URL_TEMPLATE = "{protocol}://{host}:{port}/cgi-bin/eventManager.cgi?action=attach&codes=%5B{events}%5D"
 
 CONFIG_SCHEMA = vol.Schema({
     DOMAIN:
@@ -144,7 +144,7 @@ class DahuaEventThread(threading.Thread):
           CurlObj.setopt(pycurl.TCP_KEEPALIVE, 1)
           CurlObj.setopt(pycurl.TCP_KEEPIDLE, 30)
           CurlObj.setopt(pycurl.TCP_KEEPINTVL, 15)
-          CurlObj.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_DIGEST)
+          CurlObj.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_BASIC)
           CurlObj.setopt(pycurl.USERPWD, "%s:%s" % (device_cfg.get("user"), device_cfg.get("password")))
           CurlObj.setopt(pycurl.WRITEFUNCTION, device.OnReceive)
 
